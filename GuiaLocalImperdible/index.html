@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lugares Imperdibles | Guía Gastronómica y Sitios Únicos</title>
+
+    <!-- FAVICON VECTORIAL AUTOMÁTICO -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='48' fill='%232b5b84'/><circle cx='50' cy='50' r='38' fill='%23b1d4e0'/><path d='M50 30c-15 2-25 15-20 35 5 15 20 20 30 10-10 5-20-5-18-20 2-15 15-20 8-25z' fill='%239e7b66'/></svg>">
+
+    <link rel="stylesheet" href="styles.css">
+    <!-- Iconos FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos ajustados para componentes y scroll del cubículo de etiquetas */
+        .scroll-estrellas {
+            max-height: 160px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-right: 5px;
+        }
+        .scroll-estrellas::-webkit-scrollbar { width: 5px; }
+        .scroll-estrellas::-webkit-scrollbar-thumb { background-color: #52b788; border-radius: 4px; }
+        .scroll-estrellas label { font-size: 0.88rem; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+
+        .community-sidebar-card {
+            background: var(--bg-card, #fff);
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border-left: 4px solid #52b788;
+        }
+        .community-sidebar-card h4 { font-size: 0.95rem; margin-bottom: 8px; color: var(--text-main, #2b3a42); display: flex; align-items: center; gap: 8px; }
+        .community-sidebar-card p { font-size: 0.85rem; line-height: 1.4; color: var(--text-muted, #6c7a89); }
+
+        /* Cubículo con scroll para etiquetas en el formulario de publicar */
+        .tag-cubiculo-scroll {
+            max-height: 180px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color, #e2e8f0);
+            border-radius: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.02);
+        }
+        .tag-cubiculo-scroll::-webkit-scrollbar { width: 5px; }
+        .tag-cubiculo-scroll::-webkit-scrollbar-thumb { background-color: #52b788; border-radius: 4px; }
+
+        .theme-icon-transition { transition: transform 0.3s ease; }
+        .theme-icon-transition.rotate { transform: rotate(360deg); }
+    </style>
+</head>
+<body>
+
+    <!-- NOTIFICACIÓN WEB -->
+    <div id="toast-notification" class="toast hidden">
+        <i class="fa-solid fa-bell"></i>
+        <span id="toast-message">Bienvenido a Lugares Imperdibles.</span>
+    </div>
+
+    <!-- CABECERA PRINCIPAL -->
+    <header class="navbar">
+        <div class="logo-container">
+            <div class="svg-brand-logo">
+                <svg viewBox="0 0 200 200" width="100%" height="100%">
+                    <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#2b5b84" stroke-width="5"/>
+                    <path d="M 115,32 C 60,35 38,80 50,130 C 62,170 110,172 148,145 C 98,155 62,125 65,88 C 68,52 98,38 115,32 Z" fill="#b1d4e0" stroke="#4a86a8" stroke-width="2"/>
+                    <path d="M 105,42 C 70,45 52,80 62,120 C 72,150 108,152 138,132 C 98,140 72,118 74,88 C 76,58 98,46 105,42 Z" fill="#dfebf2"/>
+                    <path d="M 112,112 C 106,112 102,122 102,136 C 102,146 108,152 116,152 C 124,152 129,146 129,136 C 129,122 124,112 119,112 Z" fill="#9e7b66"/>
+                    <path d="M 115,118 L 116,128 M 110,125 L 113,132 M 121,125 L 118,132 M 111,136 L 114,144 M 120,136 L 117,144" stroke="#5d4037" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="115" cy="108" r="9" fill="#9e7b66"/>
+                    <polygon points="108,104 104,92 112,99" fill="#9e7b66"/>
+                    <polygon points="122,104 126,92 118,99" fill="#9e7b66"/>
+                    <path d="M 124,148 C 136,152 142,140 138,130" fill="none" stroke="#9e7b66" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M 22,110 L 22,148 M 16,118 L 28,118 M 16,125 L 28,125" stroke="#2b5b84" stroke-width="2.5" stroke-linecap="round"/>
+                    <path d="M 178,110 L 178,148 M 172,118 L 184,118 M 172,125 L 184,125" stroke="#2b5b84" stroke-width="2.5" stroke-linecap="round"/>
+                    <path id="text-path-head" d="M 32,152 A 76,76 0 0,0 168,152" fill="none"/>
+                    <text fill="#2b5b84" font-size="16" font-weight="900" font-family="Segoe UI, Arial, sans-serif" letter-spacing="2">
+                        <textPath href="#text-path-head" startOffset="50%" text-anchor="middle">LUNA VERITA</textPath>
+                    </text>
+                </svg>
+            </div>
+            <div class="logo-text">Lugares <span>Imperdibles</span></div>
+        </div>
+        
+        <nav>
+            <a href="#" class="nav-link active"><i class="fa-solid fa-house"></i> Inicio</a>
+            
+            <div class="dropdown-container">
+                <button type="button" class="nav-link dropdown-btn" onclick="toggleCityDropdown(event)">
+                    <i class="fa-solid fa-compass"></i> Explorar Ciudades <i class="fa-solid fa-chevron-down"></i>
+                </button>
+                <div id="city-dropdown-menu" class="dropdown-menu hidden">
+                    <a href="#" onclick="filterByCity('Fusagasugá')"><i class="fa-solid fa-location-dot"></i> Fusagasugá</a>
+                    <a href="#" onclick="filterByCity('Bogotá')"><i class="fa-solid fa-city"></i> Bogotá D.C.</a>
+                    <a href="#" onclick="filterByCity('Medellín')"><i class="fa-solid fa-mountain-sun"></i> Medellín</a>
+                    <a href="#" onclick="filterByCity('Cali')"><i class="fa-solid fa-sun"></i> Cali</a>
+                    <a href="#" onclick="filterByCity('Barranquilla')"><i class="fa-solid fa-water"></i> Barranquilla</a>
+                    <a href="#" onclick="filterByCity('Cartagena')"><i class="fa-solid fa-umbrella-beach"></i> Cartagena</a>
+                    <a href="#" onclick="filterByCity('Bucaramanga')"><i class="fa-solid fa-tree"></i> Bucaramanga</a>
+                    <a href="#" onclick="filterByCity('Pereira')"><i class="fa-solid fa-mug-hot"></i> Pereira</a>
+                    <a href="#" onclick="filterByCity('Manizales')"><i class="fa-solid fa-cloud-sun"></i> Manizales</a>
+                    <a href="#" onclick="filterByCity('Santa Marta')"><i class="fa-solid fa-ship"></i> Santa Marta</a>
+                    <a href="#" onclick="filterByCity('Villavicencio')"><i class="fa-solid fa-paw"></i> Villavicencio</a>
+                </div>
+            </div>
+
+            <button type="button" class="btn-primary" onclick="openAddModal()"><i class="fa-solid fa-plus"></i> Agregar Sitio</button>
+            
+            <!-- BOTÓN DE TEMA INTERACTIVO CON SOL Y LUNA -->
+            <div class="theme-dropdown">
+                <button type="button" class="btn-theme-toggle" onclick="toggleInteractiveTheme(event)" title="Cambiar Tema">
+                    <i id="theme-icon-switcher" class="fa-solid fa-sun theme-icon-transition"></i> <span id="theme-text-switcher">Claro</span>
+                </button>
+            </div>
+
+            <div id="user-nav-area">
+                <button type="button" class="btn-outline" onclick="openLoginModal()"><i class="fa-solid fa-user"></i> Acceder / Registrarse</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- BANNERS LATERALES PUBLICITARIOS FIJOS -->
+    <aside class="side-ad-banner side-ad-left">
+        <div class="ad-content-box">
+            <i class="fa-solid fa-rectangle-ad"></i>
+            <p>Espacio Publicitario Limpio</p>
+            <span>Anuncia tu marca aquí</span>
+        </div>
+    </aside>
+
+    <aside class="side-ad-banner side-ad-right">
+        <div class="ad-content-box">
+            <i class="fa-solid fa-rectangle-ad"></i>
+            <p>Espacio Publicitario Limpio</p>
+            <span>Anuncia tu marca aquí</span>
+        </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="main-container">
+        <section class="feed-section">
+            
+            <div class="search-bar-container">
+                <div class="search-input-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="site-search-input" placeholder="Busca restaurantes, cafés, miradores o ciudades..." oninput="handleSearchInput(event)">
+                </div>
+                <div id="search-suggestions-box" class="search-suggestions hidden"></div>
+            </div>
+
+            <div class="feed-header">
+                <h2><i class="fa-solid fa-fire"></i> Publicaciones Destacadas</h2>
+                <div class="filter-tags">
+                    <button type="button" class="tag active" onclick="filterByCategory('Todos', this)">Todos</button>
+                    <button type="button" class="tag" onclick="filterByCategory('Gastronomía', this)">Gastronomía</button>
+                    <button type="button" class="tag" onclick="filterByCategory('Para Citas', this)">Para Citas</button>
+                    <button type="button" class="tag" onclick="filterByCategory('Fines de Semana', this)">Fines de Semana</button>
+                </div>
+            </div>
+
+            <div id="reviews-feed">
+              <!-- TARJETA REAL: MIRADOR DE LA PAMPA -->
+<article class="review-card reddit-card" id="card-PAMPA" data-author="Valentina Vera" data-name="Mirador de la Pampa" data-category="Fines de Semana Para Citas" data-city="Fusagasugá">
+    <div class="card-options-dropdown">
+        <button type="button" class="btn-more-options" onclick="toggleOptionsDropdown(event, 'opt-PAMPA', 'card-PAMPA')" title="Opciones">
+            <i class="fa-solid fa-ellipsis-vertical"></i>
+        </button>
+        <div id="opt-PAMPA" class="options-menu hidden"></div>
+    </div>
+
+    <div class="card-author">
+        <div class="svg-avatar-box">
+            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                <circle cx="50" cy="50" r="48" fill="#d8f3dc"/>
+                <circle cx="50" cy="38" r="18" fill="#1ab394"/>
+                <path d="M 20,88 C 20,62 32,58 50,58 C 68,58 80,62 80,88 Z" fill="#1ab394"/>
+            </svg>
+        </div>
+        <div class="author-info-wrapper">
+    <h4>Usuario Anónimo <span class="author-tag">Reseña Verificada</span></h4>
+    <!-- Reemplaza el texto fijo por el tiempo calculado dinámicamente -->
+    <span>Fusagasugá, Cundinamarca • <span class="post-time-text">Hace un momento</span></span>
+</div>
+    </div>
+
+    <div class="card-content">
+        <h3>Mirador de la Pampa</h3>
+        
+        <p class="location">
+            <a href="https://maps.app.goo.gl/sxbtGLtXz6EtxKxi8" target="_blank" rel="noopener noreferrer">
+                <i class="fa-solid fa-location-dot"></i> Vía Fusagasugá - Pasca, Fusagasugá <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
+        </p>
+        
+        <p class="description">
+            Un mirador espectacular con una vista panorámica increíble hacia las montañas y el valle de Fusagasugá. Un lugar perfecto y muy tranquilo para desconectarse de la rutina, tomar algo caliente, disfrutar del atardecer con un clima acogedor y compartir en familia o con amigos.
+        </p>
+
+        <div class="site-features">
+            <span class="feature-badge"><i class="fa-solid fa-user-group"></i> Plan amigos</span>
+            <span class="feature-badge"><i class="fa-solid fa-users"></i> Plan familiar</span>
+            <span class="feature-badge"><i class="fa-solid fa-mountain-sun"></i> Vista Panorámica</span>
+            <span class="feature-badge"><i class="fa-solid fa-car"></i> Parqueadero al aire libre</span>
+            <span class="feature-badge"><i class="fa-solid fa-utensils"></i> $15k - $30k</span>
+        </div>
+        
+        <div class="card-images-grid">
+            <img src="images/Captura de pantalla 2026-10-21 002617.png" onclick="zoomImage(this.src)" alt="Mirador de la Pampa Vista" onerror="this.src='images/Captura de pantalla 2026-10-21 002617.jpg'">
+            <img src="images/Captura de pantalla 2026-10-21 002704.png" onclick="zoomImage(this.src)" alt="Mirador de la Pampa Paisaje" onerror="this.src='images/Captura de pantalla 2026-10-21 002704.jpg'">
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <div class="rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star-half-stroke"></i>
+            <span>4.8</span>
+        </div>
+        <div class="actions">
+            <button type="button" class="btn-action" onclick="toggleLike(this)"><i class="fa-regular fa-thumbs-up"></i> Útil (<span class="like-count">0</span>)</button>
+            <button type="button" class="btn-action" onclick="openCommentModal('PAMPA')"><i class="fa-regular fa-comment"></i> Comentar</button>
+        </div>
+    </div>
+
+    <div id="comments-section-PAMPA" class="comments-container hidden"></div>
+</article>
+                <!-- TARJETA REAL DE MUESTRA: RIAGGIO -->
+                <article class="review-card reddit-card" id="card-RIAGGIO" data-author="Usuario Anónimo" data-name="RIAGGIO" data-category="Gastronomía Para Citas Fines de Semana" data-city="Fusagasugá">
+                    <div class="card-options-dropdown">
+                        <button type="button" class="btn-more-options" onclick="toggleOptionsDropdown(event, 'opt-RIAGGIO', 'card-RIAGGIO')" title="Opciones">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                        <div id="opt-RIAGGIO" class="options-menu hidden"></div>
+                    </div>
+
+                    <div class="card-author">
+                        <div class="svg-avatar-box">
+                            <svg viewBox="0 0 100 100" width="100%" height="100%">
+                                <circle cx="50" cy="50" r="48" fill="#d8f3dc"/>
+                                <circle cx="50" cy="38" r="18" fill="#52b788"/>
+                                <path d="M 20,88 C 20,62 32,58 50,58 C 68,58 80,62 80,88 Z" fill="#52b788"/>
+                                <g transform="translate(32, 22) scale(0.6)">
+                                    <circle cx="10" cy="5" r="5" fill="#a8e6cf"/>
+                                    <circle cx="15" cy="10" r="5" fill="#a8e6cf"/>
+                                    <circle cx="10" cy="15" r="5" fill="#a8e6cf"/>
+                                    <circle cx="5" cy="10" r="5" fill="#a8e6cf"/>
+                                    <circle cx="10" cy="10" r="3" fill="#2a9d8f"/>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="author-info-wrapper">
+                            <h4>Usuario Anónimo <span class="author-tag">Reseña Verificada</span></h4>
+                            <span>Fusagasugá, Cundinamarca • <span class="post-time-text">Hace un momento</span></span>
+                        </div>
+                    </div>
+
+                    <div class="card-content">
+                        <h3>RIAGGIO (Durango MX & Mr. Rock)</h3>
+                        
+                        <p class="location">
+                            <a href="https://maps.app.goo.gl/RQ6ugLBBFAGokjZk6" target="_blank" rel="noopener noreferrer">
+                                <i class="fa-solid fa-location-dot"></i> Cl. 22 #43 - 35, Barrio La Venta • Fusagasugá <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </p>
+                        
+                        <p class="description">
+                            Un espacio gastronómico increíble que combina dos ambientes temáticos únicos: la calidez y tradición mexicana en <strong>Durango MX</strong> y el estilo urbano neón de <strong>Mr. Rock</strong>. Excelente gastronomía gourmet ($40k - $100k). Recomendado para ir en pareja o disfrutar en familia.
+                        </p>
+
+                        <div class="site-features">
+                            <span class="feature-badge"><i class="fa-solid fa-heart"></i> Ideal para citas</span>
+                            <span class="feature-badge"><i class="fa-solid fa-users"></i> Plan familiar</span>
+                            <span class="feature-badge"><i class="fa-solid fa-utensils"></i> $40k - $100k</span>
+                            <span class="feature-badge warning"><i class="fa-solid fa-square-parking"></i> Sin parqueadero privado</span>
+                        </div>
+                        
+                        <div class="card-images-grid">
+                            <img src="images/1a7c0bf4-34bf-4dd9-bf45-fb74c2c2a800.jfif" onclick="zoomImage(this.src)" alt="Estatua RIAGGIO" onerror="this.style.display='none'">
+                            <img src="images/adfe4332-342f-4828-9cc2-a87d773dae00.jfif" onclick="zoomImage(this.src)" alt="Sección Durango MX" onerror="this.style.display='none'">
+                            <img src="images/1b4a3098-2131-4a53-af51-c1c2e91eb51b.jfif" onclick="zoomImage(this.src)" alt="Sección Mr Rock Neon" onerror="this.style.display='none'">
+                            <img src="images/356d1953-4d1c-470b-9260-e98f01b70307.jfif" onclick="zoomImage(this.src)" alt="Hamburguesa Gourmet" onerror="this.style.display='none'">
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <span>5.0</span>
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="btn-action" onclick="toggleLike(this)"><i class="fa-regular fa-thumbs-up"></i> Útil (<span class="like-count">0</span>)</button>
+                            <button type="button" class="btn-action" onclick="openCommentModal('RIAGGIO')"><i class="fa-regular fa-comment"></i> Comentar</button>
+                        </div>
+                    </div>
+
+                    <div id="comments-section-RIAGGIO" class="comments-container hidden"></div>
+                </article>
+
+                <div id="no-results-state" class="no-results-box hidden">
+                    <i class="fa-solid fa-face-frown-open"></i>
+                    <h3>No encontramos ningún sitio</h3>
+                    <p>Intenta buscar con otro nombre, categoría o municipio.</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- COLUMNA DERECHA -->
+        <aside class="sidebar">
+            <div class="widget">
+                <h3><i class="fa-solid fa-robot"></i> Moderación Automática (IA)</h3>
+                <div class="ai-status-box">
+                    <span class="status-indicator online"></span>
+                    <p>Filtro de lenguaje ofensivo, spam y comentarios falsos activo en tiempo real.</p>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3><i class="fa-solid fa-bullhorn"></i> Espacio Publicitario</h3>
+                <div class="ad-banner responsive-ad">
+                    <p>Espacio Publicitario Limpio</p>
+                    <span>Anuncia tu negocio o marca aquí</span>
+                </div>
+            </div>
+
+            <!-- MENSAJE COMUNITARIO ENTRE PUBLICIDAD Y MÁS BUSCADOS -->
+            <div class="community-sidebar-card">
+                <h4><i class="fa-solid fa-users"></i> Hecho para la Comunidad</h4>
+                <p>Este espacio se creó para conectar a todos. Te invitamos a publicar tus sitios favoritos, recomendar dónde comer tu comida favorita o registrar negocios de manera respetuosa. ¡Disfruta y comparte en armonía!</p>
+            </div>
+
+            <div class="widget">
+                <h3><i class="fa-solid fa-fire"></i> Sitios Imperdibles Más Buscados</h3>
+                <ul class="popular-list">
+                    <li><a href="https://maps.app.goo.gl/RQ6ugLBBFAGokjZk6" target="_blank"><i class="fa-solid fa-location-dot"></i> RIAGGIO (5.0 ★) <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                    <li><a href="https://www.google.com/maps/search/Mirador+Turistico+Fusagasuga/" target="_blank"><i class="fa-solid fa-location-dot"></i> Mirador Turístico Fusagasugá <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                    <li><a href="https://www.google.com/maps/search/Cafe+de+Origen+Fusagasuga/" target="_blank"><i class="fa-solid fa-location-dot"></i> Café de Origen Tradicional <i class="fa-solid fa-arrow-up-right-from-square"></i></a></li>
+                </ul>
+            </div>
+
+            <!-- FILTRO DE ESTRELLAS CON SCROLL (DEL 5.0 AL 1.0) -->
+            <div class="widget">
+                <h3><i class="fa-solid fa-star" style="color: #f1c40f;"></i> Calificación por Estrellas</h3>
+                <div class="scroll-estrellas">
+                    <label><input type="checkbox" value="5.0"> ⭐⭐⭐⭐⭐ 5.0</label>
+                    <label><input type="checkbox" value="4.5"> ⭐⭐⭐⭐☆ 4.5</label>
+                    <label><input type="checkbox" value="4.0"> ⭐⭐⭐⭐ 4.0</label>
+                    <label><input type="checkbox" value="3.5"> ⭐⭐⭐☆ 3.5</label>
+                    <label><input type="checkbox" value="3.0"> ⭐⭐⭐ 3.0</label>
+                    <label><input type="checkbox" value="2.5"> ⭐⭐☆ 2.5</label>
+                    <label><input type="checkbox" value="2.0"> ⭐⭐ 2.0</label>
+                    <label><input type="checkbox" value="1.5"> ⭐☆ 1.5</label>
+                    <label><input type="checkbox" value="1.0"> ⭐ 1.0</label>
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- FOOTER MEJORADO Y ORGANIZADO EN EL FLUJO NORMAL DE LA PÁGINA -->
+    <footer class="footer-container">
+        <div class="footer-content">
+            <div class="footer-top-row">
+                <div class="logo-container">
+                    <div class="svg-brand-logo footer-logo-svg">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#52b788" stroke-width="5"/>
+                            <path d="M 115,32 C 60,35 38,80 50,130 C 62,170 110,172 148,145 C 98,155 62,125 65,88 C 68,52 98,38 115,32 Z" fill="#b1d4e0" stroke="#52b788" stroke-width="2"/>
+                            <path d="M 112,112 C 106,112 102,122 102,136 C 102,146 108,152 116,152 C 124,152 129,146 129,136 C 129,122 124,112 119,112 Z" fill="#9e7b66"/>
+                            <circle cx="115" cy="108" r="9" fill="#9e7b66"/>
+                            <polygon points="108,104 104,92 112,99" fill="#9e7b66"/>
+                            <polygon points="122,104 126,92 118,99" fill="#9e7b66"/>
+                            <path d="M 124,148 C 136,152 142,140 138,130" fill="none" stroke="#9e7b66" stroke-width="5" stroke-linecap="round"/>
+                            <path id="footer-text-path-sub" d="M 32,152 A 76,76 0 0,0 168,152" fill="none"/>
+                            <text fill="#1e3a5f" font-size="16" font-weight="900" font-family="Segoe UI, Arial, sans-serif" letter-spacing="2">
+                                <textPath href="#footer-text-path-sub" startOffset="50%" text-anchor="middle">LUNA VERITA</textPath>
+                            </text>
+                        </svg>
+                    </div>
+                    <div class="logo-text footer-logo-text">Lugares <span>Imperdibles</span></div>
+                </div>
+
+                <div class="footer-links-aligned">
+                    <a href="#" onclick="openModal('terms-modal')"><i class="fa-solid fa-file-contract"></i> Condiciones de servicio</a>
+                    <a href="#" onclick="openModal('privacy-modal')"><i class="fa-solid fa-shield-halved"></i> Política de privacidad</a>
+                </div>
+            </div>
+
+            <p class="footer-slogan">9 de cada 10 médicos recomiendan no perderte las mejores experiencias en Lugares Imperdibles.</p>
+
+            <div class="footer-support-box">
+                <div class="support-item">
+                    <i class="fa-solid fa-headset"></i>
+                    <div>
+                        <strong>¿Sugerencias o fallos en la página?</strong>
+                        <p>Escríbenos a nuestro correo de soporte técnico y comunidad:</p>
+                        <a href="mailto:soportelugaresimperdibles@gmail.com" class="support-email-link">soportelugaresimperdibles@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="support-item">
+                    <i class="fa-brands fa-discord discord-icon"></i>
+                    <div>
+                        <strong>Comunidad Oficial de Discord</strong>
+                        <p>Únete a nuestro servidor exclusivo para debatir, avisar fallos y proponer cambios en tiempo real:</p>
+                        <a href="https://discord.gg/4ykXNvtwef" target="_blank" rel="noopener noreferrer" class="btn-discord">
+    <i class="fa-brands fa-discord"></i> Unirse al Canal General de Discord
+</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-bar">
+                <button type="button" class="btn-footer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"><i class="fa-solid fa-arrow-up"></i> Volver arriba</button>
+                <p>&copy; 2026 Lugares Imperdibles. Desarrollado por Valentina Vera.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL LOGIN CON OTRAS OPCIONES -->
+    <div id="login-modal" class="modal-overlay hidden">
+        <div class="modal-card weverse-card">
+            <button type="button" class="close-modal" onclick="closeLoginModal()">&times;</button>
+            <div class="weverse-brand-header">
+                <h2>Lugares <span>Imperdibles</span></h2>
+            </div>
+            <h3 id="modal-auth-title" class="weverse-title">¡Inicia sesión en Lugares Imperdibles!</h3>
+            
+            <div class="auth-modal-tabs">
+                <button type="button" class="auth-tab-btn active" id="btn-show-login" onclick="switchAuthTab('login')">Iniciar Sesión</button>
+                <button type="button" class="auth-tab-btn" id="btn-show-register" onclick="switchAuthTab('register')">Registrarse</button>
+            </div>
+            
+            <form id="form-login" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <input type="text" id="login-email" placeholder="Correo electrónico o usuario" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-pass" placeholder="Contraseña" required>
+                </div>
+                <button type="submit" class="btn-weverse-primary"><i class="fa-solid fa-envelope"></i> Continuar con Email</button>
+            </form>
+
+            <form id="form-register" class="hidden" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <input type="text" id="reg-name" placeholder="Nombre de usuario" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="reg-email" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="reg-pass" placeholder="Crear contraseña" required>
+                </div>
+                <button type="submit" class="btn-weverse-primary"><i class="fa-solid fa-user-plus"></i> Crear Cuenta y Registrarse</button>
+            </form>
+
+            <div class="weverse-divider"><span>Otras opciones</span></div>
+
+            <div class="social-login-list" style="display: flex; flex-direction: column; gap: 8px;">
+                <button type="button" class="btn-weverse-social google" onclick="handleGoogleLogin()"><i class="fa-brands fa-google"></i> Continuar con Google</button>
+                <button type="button" class="btn-weverse-social discord" onclick="alert('Conectando con Discord...')" style="background: #5865F2; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600;"><i class="fa-brands fa-discord"></i> Continuar con Discord</button>
+                <button type="button" class="btn-weverse-social facebook" onclick="alert('Conectando con Facebook...')" style="background: #1877F2; color: #fff; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: 600;"><i class="fa-brands fa-facebook"></i> Continuar con Facebook</button>
+                <button type="button" class="btn-weverse-social anon" onclick="setAnonymousUser()"><i class="fa-solid fa-user-secret"></i> Continuar como Anónimo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- VISOR LIGHTBOX -->
+    <div id="image-lightbox" class="modal-overlay hidden" onclick="closeLightbox()">
+        <span class="close-lightbox">&times;</span>
+        <img id="lightbox-img" class="lightbox-content" src="" alt="Imagen ampliada">
+    </div>
+
+    <!-- MODAL REGISTRAR SITIO CON CUBÍCULO SCROLLABLE DE ETIQUETAS COMPLETA -->
+    <div id="add-modal" class="modal-overlay hidden">
+        <div class="modal-card modal-large modal-scrollable">
+            <button type="button" class="close-modal" onclick="closeAddModal()">&times;</button>
+            <h3><i class="fa-solid fa-map-pin"></i> Registrar "Sitio Único o Restaurante"</h3>
+            <p class="modal-sub">Sujeto a verificación automática de Inteligencia Artificial.</p>
+
+            <form onsubmit="handleNewReview(event)">
+                <div class="form-group">
+                    <label>Nombre del Establecimiento / Lugar</label>
+                    <input type="text" id="site-name" placeholder="Ej: Mirador de la Pampa" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Dirección del Lugar</label>
+                        <input type="text" id="site-address" placeholder="Ej: Vía Fusagasugá - Pasca" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad / Municipio</label>
+                        <input type="text" id="site-city" placeholder="Ej: Fusagasugá" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Rango de Precios</label>
+                        <select id="site-price-select" onchange="toggleCustomPriceInput(this)">
+                            <option value="$15k - $30k">$15k - $30k (Económico)</option>
+                            <option value="$30k - $60k">$30k - $60k (Medio)</option>
+                            <option value="$40k - $100k" selected>$40k - $100k (Gourmet / Premium)</option>
+                            <option value="$100k+">$100k+ (Exclusivo)</option>
+                            <option value="custom">Otro (Escribir precio personalizado...)</option>
+                        </select>
+                    </div>
+                    <div class="form-group hidden" id="custom-price-container">
+                        <label>Precio Personalizado</label>
+                        <input type="text" id="site-price-custom" placeholder="Ej: $25k - $50k por persona">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Puntuación Inicial</label>
+                    <select id="site-rating">
+                        <option value="5.0">★★★★★ 5.0 - Excelente</option>
+                        <option value="4.5">★★★★☆ 4.5 - Muy Bueno</option>
+                        <option value="4.0">★★★★☆ 4.0 - Bueno</option>
+                        <option value="3.5">★★★☆☆ 3.5 - Regular Alto</option>
+                        <option value="3.0">★★★☆☆ 3.0 - Regular</option>
+                        <option value="2.5">★★☆☆☆ 2.5 - Regular Bajo</option>
+                        <option value="2.0">★★☆☆☆ 2.0 - Deficiente</option>
+                        <option value="1.5">★☆☆☆☆ 1.5 - Muy Deficiente</option>
+                        <option value="1.0">★☆☆☆☆ 1.0 - Malo</option>
+                    </select>
+                </div>
+
+                <!-- SUBIDA DE IMÁGENES CON MODERACIÓN IA -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-images"></i> Subir Imágenes del Sitio (Moderación IA Activa):</label>
+                    <input type="file" id="site-images-file" accept="image/*" multiple required style="width: 100%; padding: 8px; border: 1px dashed var(--border-color); border-radius: 8px;">
+                </div>
+
+                <!-- CUBÍCULO CON SCROLL PARA TODAS LAS ETIQUETAS DISPONIBLES -->
+                <div class="form-group">
+                    <label><i class="fa-solid fa-tags"></i> Etiquetas Disponibles (Selecciona todas las que apliquen):</label>
+                    <div class="tag-cubiculo-scroll">
+                        <div class="tag-selector-grid">
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Ideal para citas"> <span><i class="fa-solid fa-heart"></i> Ideal para citas</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Plan familiar"> <span><i class="fa-solid fa-users"></i> Plan familiar</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Plan amigos"> <span><i class="fa-solid fa-user-group"></i> Plan amigos</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Si hay parqueadero"> <span><i class="fa-solid fa-square-parking"></i> Si hay parqueadero</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Parqueadero privado"> <span><i class="fa-solid fa-warehouse"></i> Parqueadero privado</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Parqueadero al aire libre"> <span><i class="fa-solid fa-car"></i> Parqueadero al aire libre</span></label>
+                            <label class="tag-checkbox-btn warning"><input type="checkbox" value="Sin parqueadero privado"> <span><i class="fa-solid fa-ban"></i> Sin parqueadero privado</span></label>
+                            <label class="tag-checkbox-btn warning"><input type="checkbox" value="Sin parqueadero público"> <span><i class="fa-solid fa-ban"></i> Sin parqueadero público</span></label>
+                            <label class="tag-checkbox-btn warning"><input type="checkbox" value="No hay donde parquear"> <span><i class="fa-solid fa-circle-xmark"></i> No hay donde parquear</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Pet Friendly"> <span><i class="fa-solid fa-paw"></i> Pet Friendly</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Música en Vivo"> <span><i class="fa-solid fa-music"></i> Música en vivo</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Zona al aire libre"> <span><i class="fa-solid fa-tree"></i> Zona al aire libre</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Vista Panorámica"> <span><i class="fa-solid fa-mountain-sun"></i> Vista Panorámica</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Opciones Veganas / Vegetarianas"> <span><i class="fa-solid fa-leaf"></i> Opciones Veganas</span></label>
+                            <label class="tag-checkbox-btn"><input type="checkbox" value="Wifi Gratis"> <span><i class="fa-solid fa-wifi"></i> Wifi Gratis</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Escribe tu reseña u opinión</label>
+                    <textarea id="site-review" rows="3" placeholder="Cuéntale a la comunidad sobre la comida, el ambiente y el servicio..." required></textarea>
+                </div>
+
+                <div id="ai-warning" class="ai-alert hidden">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span id="ai-alert-text">Alerta de IA: Se ha detectado contenido no apto.</span>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full"><i class="fa-solid fa-paper-plane"></i> Procesar y Publicar Sitio</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL COMENTARIOS -->
+    <div id="comment-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button type="button" class="close-modal" onclick="closeModal('comment-modal')">&times;</button>
+            <h3><i class="fa-solid fa-comment-dots"></i> Escribir un Comentario</h3>
+            <p class="modal-sub">Añade tu opinión sobre este lugar para la comunidad.</p>
+            <form onsubmit="handleAddComment(event)">
+                <input type="hidden" id="comment-site-id">
+                <div class="form-group">
+                    <textarea id="comment-text" rows="3" placeholder="Escribe tu comentario aquí..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Publicar Comentario</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODALES LEGALES -->
+    <div id="terms-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button type="button" class="close-modal" onclick="closeModal('terms-modal')">&times;</button>
+            <h3><i class="fa-solid fa-file-contract"></i> Condiciones de Servicio</h3>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-color); margin-top: 15px;">
+                1. Todas las publicaciones deben respetar los principios comunitarios.<br><br>
+                2. Las reseñas están sujetas a análisis de Inteligencia Artificial antes de su publicación.<br><br>
+                3. Se prohíbe strictly el spam, troleo o lenguaje ofensivo.
+            </p>
+        </div>
+    </div>
+
+    <div id="privacy-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button type="button" class="close-modal" onclick="closeModal('privacy-modal')">&times;</button>
+            <h3><i class="fa-solid fa-shield-halved"></i> Política de Privacidad</h3>
+            <p style="font-size: 0.9rem; line-height: 1.6; color: var(--text-color); margin-top: 15px;">
+                Garantizamos la protección total de tus datos personales e información de navegación almacenados en la plataforma.
+            </p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        /* Script interactivo para el tema con animación de sol y luna */
+        function toggleInteractiveTheme(event) {
+            const htmlTag = document.documentElement;
+            const currentTheme = htmlTag.getAttribute('data-theme');
+            const iconEl = document.getElementById('theme-icon-switcher');
+            const textEl = document.getElementById('theme-text-switcher');
+            
+            iconEl.classList.add('rotate');
+            setTimeout(() => iconEl.classList.remove('rotate'), 300);
+
+            if (currentTheme === 'light') {
+                htmlTag.setAttribute('data-theme', 'dark');
+                iconEl.className = "fa-solid fa-moon theme-icon-transition rotate";
+                textEl.textContent = "Oscuro";
+            } else {
+                htmlTag.setAttribute('data-theme', 'light');
+                iconEl.className = "fa-solid fa-sun theme-icon-transition rotate";
+                textEl.textContent = "Claro";
+            }
+        }
+    </script>
+</body>
+</html>
